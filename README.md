@@ -5,11 +5,11 @@ I created this because i use K3S for some of my Kubernetes setups and I run them
 
 ## Instructions
 
-1. Clone this repo.
+### Step 1 - Preperations.
 
-2. SSH into the server you plan to deploy Prometheus & Grafana too.
+1. SSH into the server you plan to deploy Prometheus & Grafana too.
 
-3. Create the directories needed, paths for this can be changed to whatever you supply in `values.yaml`.
+2. Create the directories needed, paths for this can be changed to whatever you supply in `values.yaml`.
 
     ```bash
     $ mkdir -p /myvolumes/prometheus/alertmanager
@@ -21,19 +21,23 @@ I created this because i use K3S for some of my Kubernetes setups and I run them
     $ mkdir -p /myvolumes/prometheus/server
     ```
 
-4. Deploy the helm chart.
+### Step 2 - Deploy the helm chart.
+
+1. Clone this repo to your computer (not the server).
+
+2. Deploy the helm chart.
 
     ```bash
     $ helm install --name pixelpiloten_prometheus . -f values.yaml
     ```
 
-5. Create a port-forward to the Grafana Service, port 8080 can be whatever port you want.
+3. Create a port-forward to the Grafana Service, port 8080 can be whatever port you want.
 
     ```bash
     $ kubectl -n monitoring port-forward svc/grafana 8080:80
     ```
 
-6. Now you can access the Grafana web GUI in your browser.
+4. Now you can access the Grafana web GUI in your browser.
 
     ```bash
     http://127.0.0.1:8080
