@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-server
+  namespace: "{{ .Values.pixelpiloten.namespace }}"
+spec:
+  capacity:
+    storage: "{{ .Values.pixelpiloten.server.storageCapacity }}"
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "{{ .Values.pixelpiloten.storageClassName }}"
+  local:
+    path: "{{ .Values.pixelpiloten.server.localPath }}"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - "{{ .Values.pixelpiloten.nodeName }}"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-server
+  namespace: "{{ .Values.pixelpiloten.namespace }}"
+spec:
+  storageClassName: "{{ .Values.pixelpiloten.storageClassName }}"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "{{ .Values.pixelpiloten.server.storageCapacity }}"

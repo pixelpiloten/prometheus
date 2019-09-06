@@ -1,0 +1,26 @@
+# This helm charts values.
+pixelpiloten:
+  namespace: monitoring
+  storageClassName: local-storage
+  nodeName: mynode
+  alertmanager:
+    storageCapacity: 2Gi
+    localPath: /myvolumes/prometheus/alertmanager
+  pushgateway:
+    storageCapacity: 2Gi
+    localPath: /myvolumes/prometheus/pushgateway
+  server:
+    storageCapacity: 2Gi
+    localPath: /myvolumes/prometheus/server
+
+# Prometheus helm chart values.
+prometheus:
+  alertmanager:
+    persistentVolume:
+      existingClaim: pvc-alertmanager
+  pushgateway:
+    persistentVolume:
+      existingClaim: pvc-pushgateway
+  server:
+    persistentVolume:
+      existingClaim: pvc-server
