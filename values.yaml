@@ -24,3 +24,12 @@ prometheus:
   server:
     persistentVolume:
       existingClaim: pvc-server
+
+# Grafana helm chart values.
+grafana:
+  sidecar:
+    datasources:
+      enabled: true
+      label: grafana_datasource
+    image: xuxinkun/k8s-sidecar:0.0.7
+    imagePullPolicy: IfNotPresent
